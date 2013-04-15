@@ -1,0 +1,8 @@
+target-eclipse
+target
+build
+bin
+.gradle
+grails-aviso-connector-*.zip
+grails-aviso-connector-*.zip.sha1
+plugin.xml
