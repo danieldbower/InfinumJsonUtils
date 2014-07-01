@@ -57,7 +57,7 @@ class EncodedResponse<T> {
 		this.id = UUID.randomUUID()
 		this.startTime = new Date()
 		this.name = name
-		this.message = "$name DataStream $id started at $startTime, but has not finished"
+		this.message = "$name EncodedResponse $id started at $startTime, but has not finished"
 	}
 	
 	void addData(T data, String message = null){
@@ -68,7 +68,7 @@ class EncodedResponse<T> {
 		if(message){
 			this.message = message
 		}else{
-			this.message = "$name DataStream $id generated successfully from $startTime to $endTime"
+			this.message = "$name EncodedResponse $id generated successfully from $startTime to $endTime"
 		}
 	}
 	
