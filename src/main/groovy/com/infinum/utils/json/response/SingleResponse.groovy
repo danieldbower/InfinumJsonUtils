@@ -14,32 +14,28 @@ class SingleResponse<T> {
 	 */
 	String message
 
-	SingleResponse(){ }
+	private SingleResponse(){ }  //disable map constructor
 	
-	/**
-	 * The data requested, as well as a flash message about the action.
-	 */
-	SingleResponse(T data, String message){
+	SingleResponse(boolean success, T data, String message){
 		super()
-		success = true
+		this.success = success
 		this.data = data
 		this.message = message
-	}
-
-	/**
-	 * The data requested
-	 */
-	SingleResponse(T data){
-		super()
-		success = true
-		this.data = data
 	}
 	
 	/**
 	 * In an error condition, we'll just pass back a message
 	 */
 	static SingleResponse asError(String message){
-		return new SingleResponse<T>(success:false, message:message)
+		return new SingleResponse(false, null, message)
+	}
+	
+	static SingleResponse asSuccess(T data, String message){
+		return new SingleResponse(true, data, message)
+	}
+	
+	static SingleResponse asSuccess(String message){
+		return new SingleResponse(true, null, message)
 	}
 	
 	static jsonProperties = { SingleResponse resp ->

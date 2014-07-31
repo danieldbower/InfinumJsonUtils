@@ -72,10 +72,8 @@ class PagedResponse<T> {
 	/**
 	 * In an error condition, we'll just pass back a message
 	 */
-	public PagedResponse(String message){
-		super()
-		success = false
-		this.message = message
+	static PagedResponse asError(String message){
+		new PagedResponse(success:false, message:message)
 	}
 	
 	public static jsonProperties = { PagedResponse resp ->
