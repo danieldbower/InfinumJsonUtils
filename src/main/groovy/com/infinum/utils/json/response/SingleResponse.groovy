@@ -14,7 +14,7 @@ class SingleResponse<T> {
 	 */
 	String message
 
-	private SingleResponse(){ }  //disable map constructor
+	SingleResponse(){ }
 	
 	SingleResponse(boolean success, T data, String message){
 		super()
