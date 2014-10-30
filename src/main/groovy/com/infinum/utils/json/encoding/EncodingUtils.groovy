@@ -23,6 +23,10 @@ class EncodingUtils {
 	static String decodeData(String encoded){
 		byte[] zipped = encoded.decodeBase64()
 		
+		if (!zipped.length) {
+			return
+		}
+		
 		ByteArrayInputStream inputStream = new ByteArrayInputStream(zipped)
 		GZIPInputStream zipStream = new GZIPInputStream(inputStream)
 		BufferedReader reader = zipStream.newReader()
