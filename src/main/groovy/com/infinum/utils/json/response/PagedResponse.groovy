@@ -41,6 +41,7 @@ class PagedResponse<T> {
 		success = true
 		this.data = data
 		this.total = data?.size()
+		this.message = "Success"
 	}
 
 	
