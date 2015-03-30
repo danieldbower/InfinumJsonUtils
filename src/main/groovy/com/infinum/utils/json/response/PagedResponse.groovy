@@ -1,6 +1,6 @@
 package com.infinum.utils.json.response
 
-class PagedResponse<T> {
+class PagedResponse<T> implements Iterable<T> {
 	
 	Boolean success
 	
@@ -31,6 +31,8 @@ class PagedResponse<T> {
 
 	public PagedResponse(){
 		super()
+		
+		data = []
 	}
 
 	/**
@@ -68,6 +70,10 @@ class PagedResponse<T> {
 		this.maxResults = maxResults
 		this.offset = offset
 		this.message = message
+	}
+	
+	Iterator<T> iterator(){
+		return data.iterator()
 	}
 	
 	/**
