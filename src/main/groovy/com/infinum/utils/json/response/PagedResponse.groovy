@@ -29,6 +29,17 @@ class PagedResponse<T> implements Iterable<T> {
 	 */
 	String message
 
+	/**
+	 * Calculate whether this is the last in a series of Paged Responses
+	 */
+	boolean endOfTotalResultSet(){
+		return ( (offset + maxResults) >= total)
+	}
+	
+	boolean allOfTotalResultSet(){
+		return (data.size() == total)
+	}
+
 	public PagedResponse(){
 		super()
 		
@@ -71,7 +82,10 @@ class PagedResponse<T> implements Iterable<T> {
 		this.offset = offset
 		this.message = message
 	}
-	
+
+	/**
+	 * Iterate over data existing in this set, not the total set
+	 */
 	Iterator<T> iterator(){
 		return data.iterator()
 	}
@@ -82,10 +96,38 @@ class PagedResponse<T> implements Iterable<T> {
 	static PagedResponse asError(String message){
 		new PagedResponse(success:false, message:message)
 	}
+		
+	/**
+	 * Add two PagedResponses from the same overall set.
+	 * Be sure to provide consecutive PagedResponses
+	 */
+	static PagedResponse<T> merge(PagedResponse<T> a, PagedResponse<T> b){
+		if(!a && b){
+			return b
+		}
+		if(a && !b){
+			return a
+		}
+		if(!a && !b){
+			return null
+		}
+		
+		if(!a.success || !b.success){
+			return null
+		}
+		
+		Collection<T> newCollection = a.data + b.data
+		int maxResults = a.maxResults + b.maxResults
+		int offset = ((a.offset>b.offset)?b.offset:a.offset)
+		return new PagedResponse(newCollection, maxResults, offset,
+			a.total, a.message + " -- and -- "+ b.message)
+	}
 	
 	public static jsonProperties = { PagedResponse resp ->
 		['success': resp.success, 'data':resp.data, 'total': resp.total,
 				'maxResults':resp.maxResults, 'offset':resp.offset,
-				'message':resp.message]
+				'message':resp.message, 
+				'endOfTotalResultSet':resp.endOfTotalResultSet(),
+				'allOfTotalResultSet':resp.allOfTotalResultSet()]
 	}
 }
