@@ -31,6 +31,8 @@ class PagedResponse<T> implements Iterable<T> {
 
 	public PagedResponse(){
 		super()
+		
+		data = []
 	}
 
 	/**
@@ -41,6 +43,7 @@ class PagedResponse<T> implements Iterable<T> {
 		success = true
 		this.data = data
 		this.total = data?.size()
+		this.message = "Success"
 	}
 
 	
