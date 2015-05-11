@@ -48,7 +48,9 @@ class PagedResponse<T> implements Iterable<T> {
 
 	/**
 	 * The entire dataset we requested
+	 * @deprecated Use asSuccess Methods instead
 	 */
+	@Deprecated 
 	public PagedResponse(Collection<T> data){
 		super()
 		success = true
@@ -60,6 +62,7 @@ class PagedResponse<T> implements Iterable<T> {
 	
 	/**
 	 * The entire dataset we requested, as well as a flash message about the action
+	 * @deprecated Use asSuccess Methods instead
 	 */
 	public PagedResponse(Collection<T> data, String message){
 		super()
@@ -71,6 +74,7 @@ class PagedResponse<T> implements Iterable<T> {
 
 	/**
 	 * The paged dataset we requested, as well as the paging parameters and a flash message about the action
+	 * @deprecated Use asSuccess Methods instead
 	 */
 	public PagedResponse(Collection<T> data, int maxResults, int offset,
 							int total, String message){
@@ -95,6 +99,36 @@ class PagedResponse<T> implements Iterable<T> {
 	 */
 	static PagedResponse asError(String message){
 		new PagedResponse(success:false, message:message)
+	}
+	
+	/**
+	 * The entire dataset we requested, as well as a flash message about the action
+	 * optional message parameter to pass back to the requestor
+	 */
+	static PagedResponse asSuccess(Collection data, String message = "Success"){
+		PagedResponse resp = new PagedResponse()
+		resp.success = true
+		resp.data = data
+		resp.total = data?.size()
+		resp.message = message
+		return resp
+	}
+	
+	/**
+	 * The entire dataset we requested, paging parameters used to generate the dataset
+	 * optional message parameter to pass back to the requestor
+	 */
+	static PagedResponse asSuccess(Collection data, int total, int maxResults, int offset,
+			String message = "Success"){
+
+		PagedResponse resp = new PagedResponse()
+		resp.success = true
+		resp.data = data
+		resp.total = total
+		resp.maxResults = maxResults
+		resp.offset = offset
+		resp.message = message
+		return resp
 	}
 		
 	/**
