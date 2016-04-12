@@ -1,5 +1,6 @@
 package com.infinum.utils.json.response
 
+import groovy.json.JsonBuilder
 import groovy.json.JsonOutput
 
 import com.infinum.utils.json.encoding.EncodingUtils
@@ -93,7 +94,20 @@ class EncodedResponse<T> {
 	static EncodedResponse asError(String message){
 		return new EncodedResponse<T>(success:false, message:message)
 	}
-	
+
+	JsonBuilder asJsonBuilder(){
+		JsonBuilder jsonBuilder = new JsonBuilder()
+		jsonBuilder {
+			id id
+			name name
+			success success
+			encodedData encodedData
+			message message
+			startTime startTime
+			endTime endTime
+		}
+	}
+
 	public static jsonProperties = { EncodedResponse resp ->
 		['id':resp.id, 'name':resp.name, 'success': resp.success, 
 				'encodedData':resp.encodedData, 'message':resp.message,

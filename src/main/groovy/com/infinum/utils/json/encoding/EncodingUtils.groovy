@@ -1,8 +1,11 @@
 package com.infinum.utils.json.encoding
 
+import groovy.transform.CompileStatic
+
 import java.util.zip.GZIPInputStream
 import java.util.zip.GZIPOutputStream
 
+@CompileStatic
 class EncodingUtils {
 	
 	static String encodeData(String s){
@@ -12,7 +15,7 @@ class EncodingUtils {
 		
 		ByteArrayOutputStream targetStream = new ByteArrayOutputStream()
 		GZIPOutputStream zipStream = new GZIPOutputStream(targetStream)
-		zipStream.write(s.getBytes())
+		zipStream.write(s.bytes)
 		zipStream.close()
 		byte[] zipped = targetStream.toByteArray()
 		targetStream.close()
@@ -31,6 +34,6 @@ class EncodingUtils {
 		GZIPInputStream zipStream = new GZIPInputStream(inputStream)
 		BufferedReader reader = zipStream.newReader()
 		
-		return reader?.getText()
+		return reader?.text
 	}
 }

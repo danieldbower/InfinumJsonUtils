@@ -1,5 +1,7 @@
 package com.infinum.utils.json.response
 
+import groovy.json.JsonBuilder
+
 class SingleResponse<T> {
 		
 	Boolean success
@@ -37,7 +39,16 @@ class SingleResponse<T> {
 	static SingleResponse asSuccess(String message){
 		return new SingleResponse(true, null, message)
 	}
-	
+
+	JsonBuilder asJsonBuilder(){
+		JsonBuilder jsonBuilder = new JsonBuilder()
+		jsonBuilder {
+			success success
+			data data
+			message message
+		}
+	}
+
 	static jsonProperties = { SingleResponse resp ->
 		['success': resp.success, 'data':resp.data, 'message':resp.message]
 	}

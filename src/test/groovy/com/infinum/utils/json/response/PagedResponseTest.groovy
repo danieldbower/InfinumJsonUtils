@@ -6,8 +6,8 @@ class PagedResponseTest {
 
 	@Test
 	void mergeTestA(){
-		PagedResponse a = new PagedResponse([0,1,2,3,4], 5, 0, 10, 'first half')
-		PagedResponse b = new PagedResponse([5,6,7,8,9], 5, 5, 10, 'second half')
+		PagedResponse a = PagedResponse.asSuccess([0,1,2,3,4], 10, 5, 0, 'first half')
+		PagedResponse b = PagedResponse.asSuccess([5,6,7,8,9], 10, 5, 5, 'second half')
 		
 		PagedResponse c = PagedResponse.merge(a, b)
 		
@@ -22,8 +22,8 @@ class PagedResponseTest {
 
 	@Test
 	void mergeTestB(){
-		PagedResponse a = new PagedResponse([0,1,2,3,4], 5, 0, 12, 'first half')
-		PagedResponse b = new PagedResponse([5,6,7,8,9], 5, 5, 12, 'second half')
+		PagedResponse a = PagedResponse.asSuccess([0,1,2,3,4], 12, 5, 0, 'first half')
+		PagedResponse b = PagedResponse.asSuccess([5,6,7,8,9], 12, 5, 5, 'second half')
 		
 		PagedResponse c = PagedResponse.merge(a, b)
 		
@@ -36,4 +36,9 @@ class PagedResponseTest {
 		assert !c.allOfTotalResultSet()
 	}
 
+	@Test
+	void asJson(){
+		PagedResponse a = PagedResponse.asSuccess([0,1,2,3,4], 5, 0, 10, 'successfully instantiated')
+		assert """{"success":true,"data":[0,1,2,3,4],"total":5,"maxResults":0,"offset":10,"message":"successfully instantiated","endOfTotalResultSet":true,"allOfTotalResultSet":true}""" == a.asJsonBuilder().toString()
+	}
 }

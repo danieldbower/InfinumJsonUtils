@@ -32,4 +32,10 @@ class SingleResponseTest {
 		assert null == sr.data
 		
 	}
+
+	@Test
+	void asJson(){
+		SingleResponse sr = SingleResponse.asSuccess([name:'testMap'], "successfully instantiated")
+		assert """{"success":true,"data":{"name":"testMap"},"message":"successfully instantiated"}""" == sr.asJsonBuilder().toString()
+	}
 }

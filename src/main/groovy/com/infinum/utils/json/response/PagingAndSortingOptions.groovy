@@ -1,8 +1,11 @@
 package com.infinum.utils.json.response
 
+import groovy.transform.CompileStatic
+
 /*
  * Defined using params used in Grails List Queries:  grails-docs-2.1/ref/Domain Classes/list.html
  */
+@CompileStatic
 class PagingAndSortingOptions {
 
     static final String ORDER_DESC = 'desc'

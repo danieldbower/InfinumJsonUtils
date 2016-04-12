@@ -1,5 +1,7 @@
 package com.infinum.utils.json.response
 
+import groovy.json.JsonBuilder
+
 class PagedResponse<T> implements Iterable<T> {
 	
 	Boolean success
@@ -130,7 +132,7 @@ class PagedResponse<T> implements Iterable<T> {
 		resp.message = message
 		return resp
 	}
-		
+
 	/**
 	 * Add two PagedResponses from the same overall set.
 	 * Be sure to provide consecutive PagedResponses
@@ -156,7 +158,21 @@ class PagedResponse<T> implements Iterable<T> {
 		return new PagedResponse(newCollection, maxResults, offset,
 			a.total, a.message + " -- and -- "+ b.message)
 	}
-	
+
+	JsonBuilder asJsonBuilder(){
+		JsonBuilder jsonBuilder = new JsonBuilder()
+		jsonBuilder {
+			success success
+			data data
+			total total
+			maxResults maxResults
+			offset offset
+			message message
+			endOfTotalResultSet(endOfTotalResultSet())
+			allOfTotalResultSet(allOfTotalResultSet())
+		}
+	}
+
 	public static jsonProperties = { PagedResponse resp ->
 		['success': resp.success, 'data':resp.data, 'total': resp.total,
 				'maxResults':resp.maxResults, 'offset':resp.offset,
