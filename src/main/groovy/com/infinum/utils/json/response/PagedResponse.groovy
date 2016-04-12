@@ -37,7 +37,15 @@ class PagedResponse<T> implements Iterable<T> {
 	boolean endOfTotalResultSet(){
 		return ( (offset + maxResults) >= total)
 	}
-	
+
+	void setEndOfTotalResultSet(boolean val){
+		//calculated val
+	}
+
+	void setAllOfTotalResultSet(boolean val){
+		//calculatedVal
+	}
+
 	boolean allOfTotalResultSet(){
 		return (data.size() == total)
 	}
