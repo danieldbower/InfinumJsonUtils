@@ -6,3 +6,5 @@ bin
 grails-aviso-connector-*.zip
 grails-aviso-connector-*.zip.sha1
 plugin.xml
+.idea
+*.iml

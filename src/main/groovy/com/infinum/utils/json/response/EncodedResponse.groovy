@@ -1,7 +1,8 @@
 package com.infinum.utils.json.response
 
+import com.infinum.utils.json.encoding.GroovyJsonSerializerAdapter
+import com.infinum.utils.json.encoding.JsonSerializerAdapter
 import groovy.json.JsonBuilder
-import groovy.json.JsonOutput
 
 import com.infinum.utils.json.encoding.EncodingUtils
 
@@ -15,6 +16,11 @@ import com.infinum.utils.json.encoding.EncodingUtils
  * serialize to json automatically
  */
 class EncodedResponse<T> {
+
+	/**
+	 * Default the jsonSerializerAdapter to the GroovyJsonSerializerAdapter
+	 */
+	public static JsonSerializerAdapter jsonSerializerAdapter = new GroovyJsonSerializerAdapter()
 
 	/**
 	 * Sometimes we persist/cache these responses.  The id allows us to fetch.
@@ -75,9 +81,8 @@ class EncodedResponse<T> {
 	
 	String encodeData(T data){
 		if(!data) return ''
-		
-		String rawJson = JsonOutput.toJson(data)
-		return EncodingUtils.encodeData(rawJson)
+
+		jsonSerializerAdapter.serializeAndEncodeData(data)
 	}
 	
 	String extractDataAsJsonString(){
